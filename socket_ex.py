@@ -18,3 +18,15 @@ conn.close()
 #     s = socket.create_server(addr, family=socket.AF_INET6, dualstack_ipv6=True)
 # else:
 #     s = socket.create_server(addr)
+
+# import SimpleHTTPServer
+# import SocketServer
+
+# PORT = 8089
+
+# Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
+
+# httpd = SocketServer.TCPServer(("", PORT), Handler)
+
+# print "serving at port", PORT
+# httpd.serve_forever()
