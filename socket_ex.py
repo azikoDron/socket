@@ -1,32 +1,27 @@
 import socket
+#   from bs4 import BeautifulSoup
+import soup as sup
+#   import lxml
 
-sock = socket.socket()
-sock.bind(('', 8089))
-sock.listen()
-conn, addr = sock.accept()
-while True:
-    data = conn.recv(1024)
-    if not data:
-        break   # anything u wont  
-    conn.send(data.upper())
-conn.close()
+content = 'hello'
+
+def run():
+
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # AF_INET = adress family default IPV4\\ AF_INET6 = IPV6
+    server_socket.bind(('localhost', 5002))
+    server_socket.listen()
+
+    while True:
+        soup = sup.BeautifulSoup(content, 'lxml')
+
+        client_socket, addr = server_socket.accept()
+        request = client_socket.recv(1024)
+        print(request)
+        print()
+        print(addr)
+        client_socket.sendall(soup.encode())
+        client_socket.close()
 
 
-#
-# addr = ("", 8089)  # all interfaces, port 8080
-# if socket.has_dualstack_ipv6():
-#     s = socket.create_server(addr, family=socket.AF_INET6, dualstack_ipv6=True)
-# else:
-#     s = socket.create_server(addr)
-
-# import SimpleHTTPServer
-# import SocketServer
-
-# PORT = 8089
-
-# Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
-
-# httpd = SocketServer.TCPServer(("", PORT), Handler)
-
-# print "serving at port", PORT
-# httpd.serve_forever()
+if __name__ == '__main__':
+    run()
